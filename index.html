@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!--
+    /=================================================================\
+    |   This file was developed and designed by:                      |
+    |   Fabiha                                                        |
+    |   WhatsApp: +923490098654                                       |
+    |   -----------------------------------------------------------   |
+    |   Copyright © 2025 Fabiha. All Rights Reserved.                 |
+    \=================================================================/
+-->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PubAd.media - Smarter Ad Revenue</title>
+
+  <!-- External Libraries & Frameworks -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+
+  <!-- Custom Page Styles -->
+  <style>
+    /* --- Global Styles --- */
+    html { scroll-behavior: smooth; }
+
+    /* --- Header & Navigation Styles --- */
+    .nav-link.active {
+        color: #0F172A; /* slate-900 */
+        font-weight: 600;
+        border-color: #2563EB; /* blue-600 */
+    }
+    #main-header {
+        background-color: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    #main-header.header-scrolled {
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        background-color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* --- Mobile Menu Animation --- */
+    #mobile-menu {
+        transition: max-height 0.4s ease-in-out, opacity 0.3s ease-in-out;
+        overflow: hidden;
+    }
+    .menu-closed { max-height: 0; opacity: 0; }
+    .menu-open { max-height: 500px; opacity: 1; }
+
+    /* --- Hero Section Background Animation --- */
+    @keyframes drift {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-30px, 20px); }
+      50% { transform: translate(20px, -30px); }
+      75% { transform: translate(10px, 40px); }
+      100% { transform: translate(0, 0); }
+    }
+    #network-background {
+      position: absolute;
+      top: -25%; left: -25%;
+      width: 150%; height: 150%;
+      animation: drift 40s ease-in-out infinite;
+      z-index: 0; opacity: 0.7;
+    }
+
+    /* --- Partners Logo Slider Styles --- */
+    .logos-slider {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
+        mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, rgba(0,0,0,0) 100%);
+    }
+    .logos-slider:hover .logos-track { animation-play-state: paused; }
+    .logos-track {
+        display: flex;
+        align-items: center;
+        width: calc(200px * 12);
+        animation: scroll 40s linear infinite;
+    }
+    .logo-item {
+        width: 200px;
+        flex-shrink: 0;
+        text-align: center;
+        padding: 0 20px;
+    }
+    .logo-item img {
+        height: 60px;
+        width: auto;
+        max-width: 150px;
+        cursor: pointer;
+        filter: grayscale(100%);
+        opacity: 0.6;
+        transition: all 0.4s ease-in-out;
+    }
+    .logo-item:hover img {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.12);
+    }
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-200px * 6)); }
+    }
+
+    /* --- Custom Swiper Styles for Benefits Slider --- */
+    .benefits-slider { padding: 0 20px; }
+    .benefits-slider .swiper-button-prev,
+    .benefits-slider .swiper-button-next {
+        color: #ffffff;
+        background-color: rgba(15, 23, 42, 0.5);
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+        opacity: 0.5;
+        --swiper-navigation-size: 22px;
+    }
+    .benefits-slider:hover .swiper-button-prev,
+    .benefits-slider:hover .swiper-button-next { opacity: 1; }
+    .benefits-slider .swiper-button-prev:hover,
+    .benefits-slider .swiper-button-next:hover { background-color: rgba(15, 23, 42, 0.8); }
+    .benefits-slider .swiper-button-prev { left: 10px; }
+    .benefits-slider .swiper-button-next { right: 10px; }
+    @media (max-width: 768px) {
+        .benefits-slider { padding: 0; }
+        .benefits-slider .swiper-button-prev,
+        .benefits-slider .swiper-button-next { display: none; }
+    }
+
+    /* --- Custom Swiper Styles for Why Choose Us Slider --- */
+    .why-choose-us-slider { padding: 0 20px; }
+    .why-choose-us-slider .swiper-button-prev,
+    .why-choose-us-slider .swiper-button-next {
+        color: #1E293B;
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 44px; height: 44px;
+        border-radius: 50%;
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+        opacity: 0;
+        --swiper-navigation-size: 22px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .why-choose-us-slider:hover .swiper-button-prev,
+    .why-choose-us-slider:hover .swiper-button-next { opacity: 1; }
+    .why-choose-us-slider .swiper-button-prev:hover,
+    .why-choose-us-slider .swiper-button-next:hover { background-color: rgba(255, 255, 255, 1); }
+    .why-choose-us-slider .swiper-button-prev { left: 0; }
+    .why-choose-us-slider .swiper-button-next { right: 0; }
+    @media (max-width: 768px) {
+        .why-choose-us-slider { padding: 0; }
+        .why-choose-us-slider .swiper-button-prev,
+        .why-choose-us-slider .swiper-button-next { display: none; }
+    }
+
+    /* --- Reveal on Scroll Animation --- */
+    .reveal-popup {
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal-popup.revealed {
+        opacity: 1;
+        transform: scale(1);
+    }
+  </style>
+</head>
+<body class="bg-slate-50">
+
+<!--
+    /=================================================================\
+    |   This file was developed and designed by:                      |
+    |   Fabiha                                                        |
+    |   WhatsApp: +923490098654                                       |
+    |   -----------------------------------------------------------   |
+    |   Copyright © 2025 Fabiha. All Rights Reserved.                 |
+    \=================================================================/
+-->
+<header id="main-header" class="lg:sticky top-0 z-50 transition-all duration-300">
+  <div class="container mx-auto flex justify-between items-center h-20 px-4 sm:px-6">
+
+    <a href="#" aria-label="Back to homepage" class="flex-shrink-0 z-10">
+      <img src="logo.png" alt="PubAd.media Logo" class="h-10 w-auto">
+    </a>
+
+    <nav class="hidden lg:flex items-center space-x-2" id="desktop-nav-links">
+        <a href="#benefits" class="nav-link px-4 py-2 rounded-md font-medium text-slate-700 border-2 border-transparent hover:border-blue-600 transition-all duration-200">Benefits</a>
+        <a href="#ad-formats" class="nav-link px-4 py-2 rounded-md font-medium text-slate-700 border-2 border-transparent hover:border-blue-600 transition-all duration-200">Ad Formats</a>
+        <a href="#our-team" class="nav-link px-4 py-2 rounded-md font-medium text-slate-700 border-2 border-transparent hover:border-blue-600 transition-all duration-200">Our Team</a>
+        <a href="#about-us" class="nav-link px-4 py-2 rounded-md font-medium text-slate-700 border-2 border-transparent hover:border-blue-600 transition-all duration-200">About Us</a>
+    </nav>
+
+    <div class="flex items-center z-10">
+      <button id="header-cta-button" class="hidden lg:block px-6 py-2 font-semibold rounded border-2 border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white transition-all duration-300 opacity-0 pointer-events-none">Get Started</button>
+      <button id="mobile-menu-button" class="p-2 lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-slate-800"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="lg:hidden border-t border-gray-200 menu-closed">
+      <ul class="flex flex-col items-center p-4 space-y-4">
+          <li><a href="#benefits" class="nav-link text-slate-700 hover:text-blue-600">Benefits</a></li>
+          <li><a href="#ad-formats" class="nav-link text-slate-700 hover:text-blue-600">Ad Formats</a></li>
+          <li><a href="#our-team" class="nav-link text-slate-700 hover:text-blue-600">Our Team</a></li>
+          <li><a href="#about-us" class="nav-link text-slate-700 hover:text-blue-600">About Us</a></li>
+          <li><button class="w-full px-8 py-3 font-semibold rounded border-2 border-blue-700 text-blue-700">Get Started</button></li>
+      </ul>
+  </div>
+</header>
+
+<main>
+    <!--
+        /=================================================================\
+        |   Hero Section                                                  |
+        \=================================================================/
+    -->
+    <section id="hero-section" class="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-50 text-gray-800">
+      <div id="network-background" class="hidden lg:block">
+          <svg id="network-svg" width="100%" height="100%"></svg>
+      </div>
+      <div class="relative z-10 container mx-auto flex flex-col items-center px-4 py-12 text-center">
+        <h1 class="text-5xl font-bold leading-tight sm:text-7xl text-slate-800">
+          Smarter <span class="text-blue-700">Ad Revenue</span>
+          <br>
+          Starts With <span class="text-blue-700">PubAd</span>
+        </h1>
+        <p class="px-4 sm:px-8 mt-8 mb-12 text-xl text-slate-600">
+          Power your site with premium demand, contextual targeting, and clutter-free monetization.
+          <br>
+          No fluff—just transparent solutions that drive real results.
+        </p>
+        <div class="flex flex-wrap justify-center">
+          <button class="px-8 py-3 m-2 text-lg font-semibold rounded border-2 border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white transition-all duration-300">Get Started</button>
+        </div>
+      </div>
+    </section>
+
+    <!--
+        /=================================================================\
+        |   Partners Section                                              |
+        \=================================================================/
+    -->
+    <section id="partners" class="partners-section bg-white py-16 sm:py-24 overflow-hidden">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl sm:text-5xl font-bold text-center mb-16 text-slate-800">Our Demand Partners</h2>
+        <div class="logos-slider">
+          <div class="logos-track">
+            <!-- Add 6 partner logos here -->
+            <div class="logo-item"><img src="logo1.png" alt="Partner Logo 1"></div>
+            <div class="logo-item"><img src="logo2.png" alt="Partner Logo 2"></div>
+            <div class="logo-item"><img src="logo3.png" alt="Partner Logo 3"></div>
+            <div class="logo-item"><img src="logo4.png" alt="Partner Logo 4"></div>
+            <div class="logo-item"><img src="logo5.png" alt="Partner Logo 5"></div>
+            <div class="logo-item"><img src="logo6.png" alt="Partner Logo 6"></div>
+            <!-- Duplicate logos for a seamless loop -->
+            <div class="logo-item"><img src="logo1.png" alt="Partner Logo 1"></div>
+            <div class="logo-item"><img src="logo2.png" alt="Partner Logo 2"></div>
+            <div class="logo-item"><img src="logo3.png" alt="Partner Logo 3"></div>
+            <div class="logo-item"><img src="logo4.png" alt="Partner Logo 4"></div>
+            <div class="logo-item"><img src="logo5.png" alt="Partner Logo 5"></div>
+            <div class="logo-item"><img src="logo6.png" alt="Partner Logo 6"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--
+        /=================================================================\
+        |   Benefits Section (Features)                                   |
+        \=================================================================/
+    -->
+    <section id="benefits" class="bg-blue-700 py-16 sm:py-24">
+      <div class="container mx-auto px-4 sm:px-6 relative">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-4xl sm:text-5xl font-bold text-white">Features of PubAd.Media</h2>
+          <p class="mt-4 text-lg text-blue-200 max-w-3xl mx-auto">
+            Unlock powerful tools and smart technologies designed to simplify monetization and maximize your earnings.
+          </p>
+        </div>
+        <div class="swiper benefits-slider">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide h-auto pb-8">
+              <div class="feature-card bg-white p-8 rounded-2xl shadow-lg h-full flex flex-col hover:bg-blue-200 transition-colors duration-300">
+                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+                  <img src="Smart Ad Refreshing.svg" alt="Smart Ad Refreshing" class="h-10 w-10 object-contain">
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Smart Ad Refreshing Technology</h3>
+                <p class="text-slate-600 leading-relaxed">Keep your inventory fresh and maximize your ad impressions with intelligent ad refreshing that only triggers when users are actively engaging with your content.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto pb-8">
+              <div class="feature-card bg-white p-8 rounded-2xl shadow-lg h-full flex flex-col hover:bg-blue-200 transition-colors duration-300">
+                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+                  <img src="Advanced Smart Tags.svg" alt="Advanced Smart Tags" class="h-10 w-10 object-contain">
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Advanced Smart Tags</h3>
+                <p class="text-slate-600 leading-relaxed">Easy-to-implement ad tags that optimize loading speed and ensure smooth ad delivery across all devices and platforms.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto pb-8">
+              <div class="feature-card bg-white p-8 rounded-2xl shadow-lg h-full flex flex-col hover:bg-blue-200 transition-colors duration-300">
+                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+                  <img src="PnP (Plug and Play) Integration.svg" alt="PnP (Plug and Play) Integration" class="h-10 w-10 object-contain">
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">PnP (Plug and Play) Integration</h3>
+                <p class="text-slate-600 leading-relaxed">Simple and quick setup — no complicated coding required. Start monetizing faster with our plug-and-play solution designed for publishers of all sizes.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto pb-8">
+              <div class="feature-card bg-white p-8 rounded-2xl shadow-lg h-full flex flex-col hover:bg-blue-200 transition-colors duration-300">
+                <div class="inline-flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-6">
+                  <img src="Prebid Wrapper.svg" alt="Prebid Wrapper" class="h-10 w-10 object-contain">
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Prebid Wrapper for Header Bidding</h3>
+                <p class="text-slate-600 leading-relaxed">Access premium demand through advanced header bidding technology. Our Prebid wrapper ensures maximum competition and higher CPMs for your inventory.</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+    </section>
+
+    <!--
+        /=================================================================\
+        |   Why Choose Us Section                                         |
+        \=================================================================/
+    -->
+    <section id="why-choose-us" class="bg-slate-50 py-16 sm:py-24 reveal-popup">
+      <div class="container mx-auto px-4 sm:px-6 relative">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="text-4xl sm:text-5xl font-bold text-slate-800">Why Choose Us?</h2>
+          <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">
+            Maximize revenue with our proven expertise
+          </p>
+        </div>
+        <div class="swiper why-choose-us-slider">
+          <div class="swiper-wrapper py-4">
+            <div class="swiper-slide h-auto">
+              <div class="p-8 rounded-2xl border-2 border-blue-600 h-full bg-white">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Transparent & Fair</h3>
+                <p class="text-slate-600 leading-relaxed">We believe in full transparency — no hidden cuts, no confusing numbers. You see exactly what’s happening with your inventory.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto">
+              <div class="p-8 rounded-2xl border-2 border-blue-600 h-full bg-white">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Premium Demand Access</h3>
+                <p class="text-slate-600 leading-relaxed">Connect with top-tier advertisers and SSPs to secure higher CPMs, better fill rates, and ad quality you can trust.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto">
+              <div class="p-8 rounded-2xl border-2 border-blue-600 h-full bg-white">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Advanced Technology</h3>
+                <p class="text-slate-600 leading-relaxed">From smart ad refreshing to Prebid header bidding and plug-and-play integration, our tech is built for maximum performance.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto">
+              <div class="p-8 rounded-2xl border-2 border-blue-600 h-full bg-white">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Tailored Solutions</h3>
+                <p class="text-slate-600 leading-relaxed">Every publisher is unique — we design monetization setups that fit your audience, your content, and your revenue goals.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto">
+              <div class="p-8 rounded-2xl border-2 border-blue-600 h-full bg-white">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Dedicated Support</h3>
+                <p class="text-slate-600 leading-relaxed">Work with a team that’s available when you need it — fast responses, quick problem-solving, and proactive optimization tips.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto">
+              <div class="p-8 rounded-2xl border-2 border-blue-600 h-full bg-white">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Proven Results</h3>
+                <p class="text-slate-600 leading-relaxed">With years of industry experience and millions of impressions served, we deliver strategies that turn ad spaces into reliable revenue.</p>
+              </div>
+            </div>
+            <div class="swiper-slide h-auto">
+              <div class="p-8 rounded-2xl border-2 border-blue-600 h-full bg-white">
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Equal Opportunity for All</h3>
+                <p class="text-slate-600 leading-relaxed">Whether you run a small blog or a large media network, we provide the same premium tools, demand, and support — helping you grow faster.</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+    </section>
+
+    <!--
+        /=================================================================\
+        |   Placeholder Sections                                          |
+        \=================================================================/
+    -->
+    <section id="ad-formats" class="py-16 sm:py-24 bg-white"><div class="container mx-auto px-4 text-center"><h2 class="text-4xl sm:text-5xl font-bold text-slate-800">Ad Formats</h2><p class="mt-4 text-lg text-slate-600">Content for this section will be added soon.</p></div></section>
+    <!--
+        /=================================================================\
+        |   Our Team Section                                              |
+        \=================================================================/
+    -->
+    <section id="our-team" class="py-16 sm:py-24 bg-slate-50 reveal-popup">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl sm:text-5xl font-bold text-slate-800">Meet Our Team</h2>
+          <p class="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">The experts behind our success, dedicated to yours.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 pt-16">
+
+          <!-- Team Member: CEO -->
+          <div class="relative">
+            <div class="team-card bg-white rounded-2xl shadow-lg shadow-blue-600/10 p-8 pt-20 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-600/30">
+              <img src="Profile1.jpeg" alt="Profile picture of the CEO" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg shadow-blue-600/30 absolute -top-16 left-1/2 -translate-x-1/2">
+              <h3 class="text-2xl font-bold text-slate-800" style="font-family: 'Poppins', sans-serif;">Alex Thompson</h3>
+              <p class="text-blue-700 font-semibold mt-1" style="font-family: 'Manrope', sans-serif;">Chief Executive Officer</p>
+              <div class="flex space-x-4 mt-6 justify-center">
+                <a href="mailto:ceo@pubad.media" class="group" aria-label="Email the CEO">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-slate-400 group-hover:text-blue-700 transition-colors"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Member: CTO -->
+          <div class="relative">
+            <div class="team-card bg-white rounded-2xl shadow-lg shadow-blue-600/10 p-8 pt-20 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-600/30">
+              <img src="Profile2.jpeg" alt="Profile picture of the CTO" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg shadow-blue-600/30 absolute -top-16 left-1/2 -translate-x-1/2">
+              <h3 class="text-2xl font-bold text-slate-800" style="font-family: 'Poppins', sans-serif;">Maria Garcia</h3>
+              <p class="text-blue-700 font-semibold mt-1" style="font-family: 'Manrope', sans-serif;">Chief Technology Officer</p>
+              <div class="flex space-x-4 mt-6 justify-center">
+                <a href="mailto:cto@pubad.media" class="group" aria-label="Email the CTO">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-slate-400 group-hover:text-blue-700 transition-colors"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Member: Partner -->
+          <div class="relative">
+            <div class="team-card bg-white rounded-2xl shadow-lg shadow-blue-600/10 p-8 pt-20 text-center transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-blue-600/30">
+              <img src="Profile3.jpeg" alt="Profile picture of the Partner" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-lg shadow-blue-600/30 absolute -top-16 left-1/2 -translate-x-1/2">
+              <h3 class="text-2xl font-bold text-slate-800" style="font-family: 'Poppins', sans-serif;">Samuel Chen</h3>
+              <p class="text-blue-700 font-semibold mt-1" style="font-family: 'Manrope', sans-serif;">Managing Partner</p>
+              <div class="flex space-x-4 mt-6 justify-center">
+                <a href="mailto:partner@pubad.media" class="group" aria-label="Email the Partner">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6 text-slate-400 group-hover:text-blue-700 transition-colors"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <section id="about-us" class="py-16 sm:py-24 bg-white"><div class="container mx-auto px-4 text-center"><h2 class="text-4xl sm:text-5xl font-bold text-slate-800">About Us</h2><p class="mt-4 text-lg text-slate-600">Content for this section will be added soon.</p></div></section>
+  </main>
+
+<!--
+    /=================================================================\
+    |   This file was developed and designed by:                      |
+    |   Fabiha                                                        |
+    |   WhatsApp: +923490098654                                       |
+    |   -----------------------------------------------------------   |
+    |   Copyright © 2025 Fabiha. All Rights Reserved.                 |
+    \=================================================================/
+-->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // --- 1. Element Selection ---
+    const header = document.getElementById('main-header');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const heroSection = document.getElementById('hero-section');
+    const headerCtaButton = document.getElementById('header-cta-button');
+    const networkSvg = document.getElementById('network-svg');
+    const networkContainer = document.getElementById('network-background');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section[id]');
+
+    // --- 2. Event Listeners & Observers ---
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('menu-closed');
+            mobileMenu.classList.toggle('menu-open');
+        });
+    }
+    if (heroSection && headerCtaButton && header && window.innerWidth >= 768) {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    const isNotIntersecting = !entry.isIntersecting;
+                    header.classList.toggle('header-scrolled', isNotIntersecting);
+                    headerCtaButton.classList.toggle('opacity-0', !isNotIntersecting);
+                    headerCtaButton.classList.toggle('pointer-events-none', !isNotIntersecting);
+                });
+            },
+            { threshold: 0.1 }
+        );
+        observer.observe(heroSection);
+    }
+    if (navLinks.length > 0 && sections.length > 0) {
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href').substring(1) === entry.target.id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: "-50% 0px -50% 0px" });
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+    }
+
+    // --- 3. Slider Initializations ---
+    const benefitsSlider = new Swiper('.benefits-slider', {
+        loop: true,
+        autoplay: { delay: 5000, disableOnInteraction: false },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        slidesPerView: 1,
+        spaceBetween: 30,
+        breakpoints: {
+            768: { slidesPerView: 2, spaceBetween: 40 },
+            1024: { slidesPerView: 4, spaceBetween: 30 }
+        }
+    });
+    const whyChooseUsSlider = new Swiper('.why-choose-us-slider', {
+        loop: true,
+        autoplay: { delay: 4000, disableOnInteraction: false },
+        navigation: { nextEl: '.why-choose-us-slider .swiper-button-next', prevEl: '.why-choose-us-slider .swiper-button-prev' },
+        slidesPerView: 1,
+        spaceBetween: 30,
+        breakpoints: {
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 4, spaceBetween: 30 },
+        }
+    });
+    const revealElements = document.querySelectorAll('.reveal-popup');
+    if (revealElements.length > 0) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+    }
+
+    // --- 4. Animation Logic ---
+    const svgNS = "http://www.w3.org/2000/svg";
+    if (networkSvg && networkContainer && window.innerWidth >= 1024) {
+        const width = networkContainer.clientWidth;
+        const height = networkContainer.clientHeight;
+        const numNodes = 100;
+        const nodes = [];
+        const connections = 3;
+        for (let i = 0; i < numNodes; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height
+            });
+        }
+        nodes.forEach((node, i) => {
+            const neighbors = nodes
+                .map((n, j) => {
+                    if (i === j) return null;
+                    const dist = Math.sqrt(Math.pow(n.x - node.x, 2) + Math.pow(n.y - node.y, 2));
+                    return { index: j, dist: dist };
+                })
+                .filter(n => n !== null)
+                .sort((a, b) => a.dist - b.dist)
+                .slice(0, connections);
+            neighbors.forEach(neighbor => {
+                const targetNode = nodes[neighbor.index];
+                const line = document.createElementNS(svgNS, 'line');
+                line.setAttribute('x1', node.x);
+                line.setAttribute('y1', node.y);
+                line.setAttribute('x2', targetNode.x);
+                line.setAttribute('y2', targetNode.y);
+                line.setAttribute('stroke', '#E2E8F0');
+                line.setAttribute('stroke-width', '1');
+                networkSvg.appendChild(line);
+            });
+        });
+        nodes.forEach(node => {
+            const circle = document.createElementNS(svgNS, 'circle');
+            circle.setAttribute('cx', node.x);
+            circle.setAttribute('cy', node.y);
+            circle.setAttribute('r', '3');
+            circle.setAttribute('fill', '#CBD5E1');
+            networkSvg.appendChild(circle);
+        });
+    }
+
+});
+</script>
+
+</body>
+</html>
